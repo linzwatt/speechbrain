@@ -274,6 +274,8 @@ class MaskNet(nn.Module):
 
         if self.mask_nonlinear == "softmax":
             est_mask = F.softmax(score, dim=2)
+        elif self.mask_nonlinear == "sigmoid":
+            est_mask = torch.sigmoid(score)
         elif self.mask_nonlinear == "relu":
             est_mask = F.relu(score)
         else:
