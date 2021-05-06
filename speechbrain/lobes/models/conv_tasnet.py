@@ -340,9 +340,10 @@ class TemporalBlock(torch.nn.Module):
             layer_name="conv",
         )
         self.layers.append(nn.PReLU(), layer_name="act")
-        self.layers.append(
-            choose_norm(norm_type, out_channels), layer_name="norm"
-        )
+        if norm_type is not None:
+            self.layers.append(
+                choose_norm(norm_type, out_channels), layer_name="norm"
+            )
 
         # [M, K, H] -> [M, K, B]
         self.layers.append(
@@ -439,7 +440,8 @@ class DepthwiseSeparableConv(sb.nnet.containers.Sequential):
             self.append(Chomp1d(padding), layer_name="chomp")
 
         self.append(nn.PReLU(), layer_name="act")
-        self.append(choose_norm(norm_type, in_channels), layer_name="act")
+        if norm_type is not None:
+            self.append(choose_norm(norm_type, in_channels), layer_name="norm")
 
         # [M, K, H] -> [M, K, B]
         self.append(

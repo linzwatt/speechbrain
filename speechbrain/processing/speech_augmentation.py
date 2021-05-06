@@ -1059,7 +1059,7 @@ class DropChunk(torch.nn.Module):
             self.drop_length_low = min(drop_length_low, drop_range)
             self.drop_length_high = min(drop_length_high, drop_range)
 
-    def forward(self, waveforms, lengths):
+    def forward(self, waveforms, lengths=None):
         """
         Arguments
         ---------
@@ -1073,6 +1073,9 @@ class DropChunk(torch.nn.Module):
         Tensor of shape `[batch, time]` or
             `[batch, time, channels]`
         """
+
+        if lengths is None:
+            lengths = torch.ones(waveforms.size(0)).to(waveforms)
 
         # Reading input list
         lengths = (lengths * waveforms.size(1)).long()
