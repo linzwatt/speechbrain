@@ -432,7 +432,7 @@ class SpeedPerturb(torch.nn.Module):
     """
 
     def __init__(
-        self, orig_freq, speeds=[90, 100, 110], perturb_prob=1.0,
+        self, orig_freq, speeds=[90, 100, 110], perturb_prob=1.0, **kwargs
     ):
         super().__init__()
         self.orig_freq = orig_freq
@@ -914,6 +914,7 @@ class DropFreq(torch.nn.Module):
         drop_count_high=2,
         drop_width=0.05,
         drop_prob=1,
+        **kwargs
     ):
         super().__init__()
         self.drop_freq_low = drop_freq_low
@@ -1033,6 +1034,7 @@ class DropChunk(torch.nn.Module):
         drop_end=None,
         drop_prob=1,
         noise_factor=0.0,
+        **kwargs
     ):
         super().__init__()
         self.drop_length_low = drop_length_low
